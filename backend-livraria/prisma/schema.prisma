@@ -1,0 +1,90 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id          String       @id @default(uuid())
+  nome        String
+  email       String       @unique
+  senha       String
+  cpf         String       @unique
+  role        String       @default("USER")
+  
+  favoritos   Favorito[]
+  avaliacoes  Avaliacao[]
+  comentarios Comentario[]
+  leituras    Leitura[]    // Relação para o tempo de leitura
+}
+
+model Categoria {
+  id     Int     @id @default(autoincrement())
+  nome   String  @unique
+  livros Livro[]
+}
+
+model Livro {
+  id          String       @id @default(uuid())
+  titulo      String
+  autor       String
+  pdfUrl      String?
+  capaUrl     String?
+  categoriaId Int
+  categoria   Categoria    @relation(fields: [categoriaId], references: [id])
+  
+  favoritos   Favorito[]
+  avaliacoes  Avaliacao[]
+  comentarios Comentario[]
+  leituras    Leitura[]    // Relação para o tempo de leitura
+}
+
+model Favorito {
+  id        Int      @id @default(autoincrement())
+  userId    String   // ALTERADO: De Int para String para bater com User.id
+  livroId   String   // ALTERADO: De Int para String para bater com Livro.id
+  user      User     @relation(fields: [userId], references: [id])
+  livro     Livro    @relation(fields: [livroId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, livroId])
+}
+
+model Avaliacao {
+  id      String @id @default(uuid())
+  nota    Int
+  userId  String
+  livroId String
+  user    User   @relation(fields: [userId], references: [id])
+  livro   Livro  @relation(fields: [livroId], references: [id])
+
+  @@unique([userId, livroId])
+}
+
+model Comentario {
+  id        String   @id @default(uuid())
+  texto     String
+  createdAt DateTime @default(now())
+  usuario   User     @relation(fields: [usuarioId], references: [id])
+  usuarioId String
+  livro     Livro    @relation(fields: [livroId], references: [id])
+  livroId   String
+}
+
+// NOVO MODELO: Para o Tempo de Sabedoria
+model Leitura {
+  id                Int      @id @default(autoincrement())
+  tempoLido         Int      @default(0) // Armazena minutos
+  dataUltimaLeitura DateTime @default(now()) @updatedAt
+  
+  userId            String
+  user              User     @relation(fields: [userId], references: [id])
+  
+  livroId           String
+  livro             Livro    @relation(fields: [livroId], references: [id])
+
+  @@unique([userId, livroId])
+}

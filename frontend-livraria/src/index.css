@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Roboto:wght@400;500&display=swap');
+
+:root {
+  --color1: #cbdad5; /* Bege acinzentado - Fundo */
+  --color2: #89a7b1; /* Azul desbotado - Destaques */
+  --color3: #566981; /* Azul aço - Bordas e Sombras */
+  --color4: #3a415a; /* Azul escuro - Textos */
+  --color5: #34344e; /* Marinho Profundo - Sidebar e Botões */
+  --font-title: 'Playfair Display', serif;
+  --font-body: 'Roboto', sans-serif;
+  --gold: #c5a677;       /* Tom dourado para botões e detalhes */
+  --bg-dark: #0a0a0a;    /* Fundo preto profundo */
+  --card-dark: #1a1a1a;  /* Fundo dos cards */
+  --text-light: #e0e0e0; /* Texto claro */
+}
+
+body {
+  margin: 0;
+  background-color: var(--color1);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+/* Efeito de papel cortado à mão */
+.pergaminho {
+  background-color: #fff;
+  border-radius: 2% 4% 3% 5% / 1% 1% 2% 3%;
+  box-shadow: 8px 8px 0px var(--color3);
+  transition: all 0.3s ease;
+  border: 1px solid #ddd;
+}
+
+.pergaminho:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 12px 12px 0px var(--color2);
+}
+
+.fonte-antiga {
+  font-family: var(--font-title);
+  font-style: italic;
+}
+
+/* Scrollbar Personalizada */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--color1); }
+::-webkit-scrollbar-thumb { background: var(--color3); border-radius: 10px; }
+
+/* Container de Autenticação (Login/Registro) */
+.auth-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--color1);
+  padding: 20px;
+}
+
+.auth-container {
+  display: flex;
+  width: 100%;
+  max-width: 1000px;
+  height: 600px;
+  background-color: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+}
+
+/* Lado do Gato */
+.auth-visual-side {
+  flex: 1.2;
+  /* Esta cor DEVE ser idêntica ao fundo do seu GIF */
+  background-color: #131213; 
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  padding: 40px;
+  text-align: center;
+  
+  /* Garante que não haja brilhos ou bordas inesperadas */
+  border: none; 
+  outline: none;
+}
+
+.auth-visual-side img {
+  width: 100%;
+  max-width: 350px;
+  height: auto;
+  
+  /* Remove qualquer suavização de borda que o navegador possa aplicar */
+  display: block; 
+  mix-blend-mode: normal; 
+}
+
+/* Lado do Formulário */
+.auth-form-side {
+  flex: 1;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #fff;
+}
+
+/* Responsividade */
+@media (max-width: 850px) {
+  .auth-container {
+    flex-direction: column;
+    height: auto;
+    max-width: 500px;
+  }
+  .auth-visual-side {
+    padding: 30px;
+  }
+  .auth-form-side {
+    padding: 40px 30px;
+  }
+}
